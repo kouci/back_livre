@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  auth:
+    image: backendExpressArchiLogicielle
+    container_name: AuthContainer
+    restart: always
+    ports:
+      - "8081:8081"
+  stats:
+    image: backendExpressArchiLogicielle
+    container_name: StatsContainer
+    restart: always
+    ports:
+      - "8082:8082"
+  marketplaceWriter:
+    image: backendSpringArchiLogicielle
+    container_name: MarketplaceWriterContainer
+    restart: always
+    ports:
+      - "8083:8083"
+  marketplaceReader:
+    image: backendSpringArchiLogicielle
+    container_name: MarketplaceReaderContainer
+    restart: always
+    ports:
+      - "8084:8084"
+  livresWriter:
+    image: backendExpressArchiLogicielle
+    container_name: LivresWriterReaderContainer
+    restart: always
+    ports:
+      - "8085:8085"
+  livresReader:
+    image: backendExpressArchiLogicielle
+    container_name: LivresReaderReaderContainer
+    restart: always
+    ports:
+      - "8086:8086"
+  logs:
+    image: backendExpressArchiLogicielle
+    container_name: LogsContainer
+    restart: always
+    ports:
+      - "8087:8087"

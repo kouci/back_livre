@@ -1,0 +1,4 @@
+docker build -t my-mariadb .
+docker run -d -p 3306:3306 --name my-mariadb-container my-mariadb
+
+Créer l'image en ligne plutot

@@ -10,12 +10,12 @@ exports.login = async (req, res, next) => {
   if (!errors.isEmpty())
     return res.status(400).json({ errors: errors.array() });
 
-  const { username, password } = req.body;
+  const { identifiant, password } = req.body;
 
   await db.pool
     .query(
-      "SELECT username, user_id AS userID, password, name, siret, sirene, address, phone, mail FROM connection WHERE username = ?",
-      [username]
+      "SELECT nom, id AS userID, mot_de_passe AS password, nom AS name, siret, sirene, adresse AS address, telephone AS phone, email AS mail FROM users WHERE identifiant = ?",
+      [identifiant]
     )
     .then((user) => {
       delete user.meta;
@@ -88,7 +88,7 @@ exports.signup = async (req, res, next) => {
     .then((hashedPWD) => {
       db.pool
         .query(
-          "INSERT INTO connection (username, password, name, siret, sirene, address, phone, mail ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ",
+          "INSERT INTO users (idemtifiant, mot_de_passe, nom, siret, sirene, adresse, telephone, email ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ",
           [username, hashedPWD, name, siret, sirene, address, phone, mail]
         )
         .then((lines) => {

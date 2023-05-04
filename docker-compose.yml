@@ -43,3 +43,9 @@ services:
     restart: always
     ports:
       - "8087:8087"
+  livreAccueil:
+    image: livreAccueilBDDArchiLogicielle
+    container_name: LivreAccueilContainer
+    restart: always
+    ports:
+      - "3306:3306"

@@ -9,7 +9,7 @@ const pool = mariadb.createPool({
   password: process.env.MARIADB_PWD,
   database: process.env.MARIADB_DB,
   multipleStatements: true, //Attention aux injections sql
-  connectionLimit: 20,
+  connectionLimit: 100,
 });
 
 module.exports = Object.freeze({

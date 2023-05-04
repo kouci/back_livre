@@ -10,12 +10,12 @@ exports.login = async (req, res, next) => {
   if (!errors.isEmpty())
     return res.status(400).json({ errors: errors.array() });
 
-  const { identifiant, password } = req.body;
+  const { username, password } = req.body;
 
   await db.pool
     .query(
       "SELECT nom, id AS userID, mot_de_passe AS password, nom AS name, siret, sirene, adresse AS address, telephone AS phone, email AS mail FROM users WHERE identifiant = ?",
-      [identifiant]
+      [username]
     )
     .then((user) => {
       delete user.meta;
@@ -69,10 +69,16 @@ exports.login = async (req, res, next) => {
             accessToken,
           });
         })
-        .catch(() => res.status(500).send({ error: "Erreur" }));
+        .catch((err) => {
+          console.log(err);
+          return res.status(500).send({ error: "Erreur" });
+        });
       return undefined;
     })
-    .catch(() => res.status(500).send({ error: "Erreur" }));
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).send({ error: "Erreur" });
+    });
 };
 exports.signup = async (req, res, next) => {
   const errors = validationResult(req);
@@ -88,7 +94,7 @@ exports.signup = async (req, res, next) => {
     .then((hashedPWD) => {
       db.pool
         .query(
-          "INSERT INTO users (idemtifiant, mot_de_passe, nom, siret, sirene, adresse, telephone, email ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ",
+          "INSERT INTO users (identifiant, mot_de_passe, nom, siret, sirene, adresse, telephone, email ) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ",
           [username, hashedPWD, name, siret, sirene, address, phone, mail]
         )
         .then((lines) => {
